@@ -1,8 +1,24 @@
+import { useState } from 'react';
 import { categories } from '../data/categories';
+import type { Activity } from '../types';
 
 export const Form = () => {
 
+  
+  const [activity, setActivity] = useState<Activity>({
+    category: 1,
+    name: '',
+    calories: 0,
+  });
+  
+  const handleChange  = (e: React.ChangeEvent<HTMLSelectElement>|React.ChangeEvent<HTMLInputElement>) => {
+    const isNumberField = ['category','calories'].includes(e.target.id);
 
+    setActivity({
+      ...activity,
+      [e.target.id]: isNumberField ? parseInt(e.target.value) : e.target.value,
+    })
+  }
 
   return (
     <form
@@ -14,6 +30,8 @@ export const Form = () => {
           className="border border-slate-300 p-2 rounded-lg w-full bg-white"
           name="" 
           id="category"
+          value={activity.category}
+          onChange={ handleChange }
         >
           { categories.map( category => (
             <option 
@@ -25,15 +43,17 @@ export const Form = () => {
           )) }
         </select>
       </div>
-      
+
       <div className="grid grid-cols-1 gap-3">
-        <label htmlFor="activity" className="font-bold">Actividad:</label>
+        <label htmlFor="name" className="font-bold">Actividad:</label>
         <input
           className="border border-slate-300 p-2 rounded-lg w-full bg-white"
           type="text"
-          id="activity"
-          name="activity"
+          id="name"
+          name="name"
           placeholder="Ej. Comida, Jugo, Ejercicio..."
+          value={activity.name}
+          onChange={ handleChange }
         />
       </div>
 
@@ -45,6 +65,8 @@ export const Form = () => {
           id="calories"
           name="calories"
           placeholder="Calorias ej. 300, 500..."
+          value={activity.calories}
+          onChange={ handleChange }
         />
       </div>
 
