@@ -9,7 +9,7 @@ type FormProps = {
   dispatch: Dispatch<ActivityActions>
 }
 
-const initialActivity: Activity = {
+const initialState: Activity = {
   id: uuidv4(),
   category: 1,
   name: '',
@@ -18,14 +18,13 @@ const initialActivity: Activity = {
 
 export const Form = ( { dispatch }: FormProps ) => {
 
-  const [activity, setActivity] = useState<Activity>(initialActivity);
+  const [activity, setActivity] = useState<Activity>(initialState);
   
   const handleChange  = (e: ChangeEvent<HTMLSelectElement>| ChangeEvent<HTMLInputElement>) => {
-    const isNumberField = ['category','calories'].includes(e.target.id);
 
-    setActivity({
+  setActivity({
       ...activity,
-      [e.target.id]: isNumberField ? parseInt(e.target.value) : e.target.value,
+      [e.target.id]: e.target.value,
     })
   }
 
@@ -40,8 +39,8 @@ export const Form = ( { dispatch }: FormProps ) => {
     dispatch({ type: 'save-activity', payload: { newActivity: activity } });
     
     setActivity({
-      ...initialActivity,
-      id: uuidv4(),
+      ...initialState,
+      id: uuidv4()
     });
   }
 
@@ -54,7 +53,7 @@ export const Form = ( { dispatch }: FormProps ) => {
         <label htmlFor="category" className="font-bold">Categoría:</label>
         <select 
           className="border border-slate-300 p-2 rounded-lg w-full bg-white"
-          name="" 
+          name="category" 
           id="category"
           value={activity.category}
           onChange={ handleChange }
