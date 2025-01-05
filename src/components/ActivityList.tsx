@@ -1,7 +1,8 @@
 
 import { Activity } from '../types';
 import { categories } from '../data/categories';
-import { act, useMemo } from 'react';
+import { useMemo } from 'react';
+import { PencilSquareIcon } from '@heroicons/react/24/outline';
 
 
 type ActiviListProps = {
@@ -36,8 +37,12 @@ export default function ActivityList( { activities }: ActiviListProps ) {
                                 <span>Calorias</span>
                             </p>
                         </div>
-                        <div>
-
+                        <div className='flex gap-5 items-center'>
+                                <button>
+                                    <PencilSquareIcon
+                                        className='h-8 w-8 text-gray-800'
+                                     />
+                                </button>
                         </div>
                     </div>
                 )) }
