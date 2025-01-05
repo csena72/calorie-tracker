@@ -23,8 +23,6 @@ export const Form = ( { state, dispatch }: FormProps ) => {
 
   useEffect(() => {
     if(state.activeId) {
-        console.log('Hay algo en activeId ->', state.activeId);
-
         const selectedActivity = state.activities.filter( stateActivity => stateActivity.id === state.activeId )[0];
         setActivity(selectedActivity);
       }

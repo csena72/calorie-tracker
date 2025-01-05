@@ -1,3 +1,4 @@
+import { act } from 'react';
 import { Activity } from '../types';
 
 
@@ -20,11 +21,20 @@ export const activityReducer = (
     action: ActivityActions
 ) => {
     if(action.type === 'save-activity') {
-        // acá manejamos la logica para actualizar el state
 
+        let updatedActivities: Activity[] = [];
+
+        if(state.activeId) {
+            updatedActivities = state.activities.map( activity => 
+                activity.id === state.activeId ? action.payload.newActivity : activity
+            );
+        } else {
+            updatedActivities = [...state.activities, action.payload.newActivity];
+        }
         return {
             ...state,
-            activities: [...state.activities, action.payload.newActivity]
+            activities: updatedActivities,
+            activeId: '',
         }
     }
 
